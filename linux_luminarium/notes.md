@@ -237,4 +237,117 @@ not opening a whole terminal
 SU authentication is password based. (you know how bad using password is)
 SUDO authentication is different and is policy based (/etc/sudoers)
 
+---
+
+## Permission, Ownership and Group
+
+### id
+
+use to inspect current user group, uid, gid, ...
+
+### chown
+use to change owner of file
+
+```sh
+chown [user] [file]
+```
+
+### chgrp 
+
+use to change group of file
+```sh
+chgrp [group] [file]
+```
+
+### chmod
+
+change permissions of file/directory
+
+example ( MODE : WHO +/-/= WHAT)
+```sh
+chmod u+r file ( + is used to add permission )
+chmod g-wx file ( - is used to revoke perimssion )
+chmod u=rw file ( = is used to set permission explicitly, and overwritting previous permission )
+```
+
+WHO : u (owenr User), g (group), o (other), a (all)
+WHAT : r (read), w (write), x (execute)
+
+
+you can also chain different permission set using `,`
+
+```sh
+chmod u=rw,g=r file
+chmod u=rwx,g=- file
+```
+
+### SUID 
+
+SUID : Set User ID.
+
+SUID bit lets a user to run program as the owner of that program.
+
+for example if the file(program) is owned by root and its SUID bit is set and if the user has execution permission, then user can run that progrma as root.
+
+SUID is displayed as `s` instead of `x` when showing execution permission for owner. you can set this bit using chmod like follow : 
+
+```sh
+chmod u+s file
+```
+
+### Sticky bit
+
+it is a permission for directories.
+
+it looks like the following (in permission list, the `t` indicates this permission)
+```
+drwxrwxrwt
+```
+
+That `t` bit at the end is the sticky bit. The sticky bit means that the directory only allows the owners of files to rename or remove files in the directory
+
+how to enable it ?
+
+```
+chmod +t <directory>
+```
+
+## Terminal Multiplexing
+
+there are two utilities to this end. `screen` and `tmux`
+
+### screen
+
+its hotkey is `Ctrl+A`
+
+```sh
+# create a session
+$ screen
+
+# detach from a session
+<Ctrl+A> d
+
+# re-attach to a session (attach to latest session)
+screen -r 
+
+# list current sessions
+screen -ls
+
+# re-attach to a session using its name or PID
+screen -r <name or PID>
+```
+
+
+
+### tmux
+
+its hotkey is `Ctrl + B`
+
+```sh
+# list sessions
+tmux ls
+
+# attach to a session
+
+tmux a 
 
